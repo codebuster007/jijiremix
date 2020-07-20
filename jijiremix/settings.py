@@ -42,10 +42,16 @@ EXTERNAL_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'djoser',
+
 ]
 
 PROJECT_APPS = [
     'accounts',
+    'store',
 
 ]
 INSTALLED_APPS = EXTERNAL_APPS + PROJECT_APPS
@@ -78,6 +84,9 @@ TEMPLATES = [
         },
     },
 ]
+
+# Custom User Model
+AUTH_USER_MODEL = 'accounts.ORMUser'
 
 WSGI_APPLICATION = 'jijiremix.wsgi.application'
 
@@ -137,6 +146,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
@@ -179,6 +189,14 @@ REST_USE_JWT = True
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
     'USER_ID_FIELD': 'user_id',
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'GET_USER_SECRET_KEY ': 'accounts.models.jwt_get_secret_key',
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+DJOSER = {
+    'USER_ID_FIELD': 'user_id',
+    'LOGIN_FIELD': 'email',
+}
+
