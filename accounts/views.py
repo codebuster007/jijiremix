@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
@@ -25,12 +26,16 @@ class UserLogoutAllView(views.APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+    permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = UserSerializer
     queryset = ORMUser.objects.all()
 
     def get_object(self):
         queryset = self.get_queryset()
+
+        self.check_permissions(self.request)
+
+
         filter = {'user_id': self.request.user.user_id}
 
         obj = get_object_or_404(queryset, **filter)

@@ -15,7 +15,7 @@ class ORMItem(models.Model):
     name = models.CharField(max_length=20, blank=False, null=False, db_index=True)
     description = models.CharField(max_length=255, blank=False, null=False)
     price = models.DecimalField(decimal_places=2, max_digits=20, default=0)
-    image = models.ImageField(upload_to="item_gallery/", blank=False)
+    image = models.ImageField(upload_to="item_gallery/", default='item_gallery/dummy_img.jpg')
 
     is_sold = models.BooleanField(default=False)
     sold_to = models.ForeignKey('ORMBuyer', on_delete=models.CASCADE, null=True, blank=True, related_name='sold_to')

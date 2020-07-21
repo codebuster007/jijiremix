@@ -14,11 +14,18 @@ class BuyerSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def save(self):
-        item = self.context.get("item")
-        print('##### ', item)
-        # if re
+        
+        buyer = None
+        try:
+            email = self.validated_data['email']
+            item = self.validated_data['item']
+            buyer  = ORMBuyer.objects.filter(email=email, item=item)
+        except ORMBuyer.DoesNotExist:
+            pass
 
-        return super(BuyerSerializer, self).save()
+        if buyer:
+            raise serializers.ValidationError(_('Already created interest'))
+        return super().save()
 
 
 class BuyerListing(serializers.RelatedField):
@@ -52,10 +59,10 @@ class ItemOwnerListing(serializers.RelatedField):
         return ORMUser.objects.get(user_id=data)
 
 class ItemSerialiazer(serializers.ModelSerializer):
-    sold_to = BuyerListing(queryset=ORMBuyer.objects.all())
-    owner = ItemOwnerListing(queryset=ORMUser.objects.all())
+    sold_to = BuyerListing(queryset=ORMBuyer.objects.all(), required=False)
+    owner = ItemOwnerListing(queryset=ORMUser.objects.all(), required=False)
     
-    intrested_buyers = BuyerSerializer(source='item',
+    interested_buyers = BuyerSerializer(source='item',
                                        many=True, required=False)
     class Meta:
         model = ORMItem
@@ -87,6 +94,7 @@ class ItemSerialiazer(serializers.ModelSerializer):
         
         try:
             if instance.image is not None and \
+                instance.image != 'item_gallery/dummy_img.jpg' and \
                 validated_data.get('image', None) is not None:
                 os.remove(instance.image.file.name)
         except FileNotFoundError:
@@ -105,4 +113,3 @@ class ItemSerialiazer(serializers.ModelSerializer):
             user = request.user
             self.validated_data['owner'] = user
         return super().save()
-

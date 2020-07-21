@@ -27,11 +27,7 @@ class CreateBuyerInterest(generics.CreateAPIView):
     lookup_url_kwarg = 'item_id'
 
     def post(self, request, *args, **kwargs):
-
-        print('### ', request.data)
         item_id = self.kwargs.get(self.lookup_url_kwarg)
-        item = ORMItem.objects.get(item_id=item_id)
-        
-        request.data['item'] = item.pk
+        request.data['item'] = item_id
         return super().post(request, *args, **kwargs)
 

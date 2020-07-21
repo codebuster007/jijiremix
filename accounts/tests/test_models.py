@@ -7,6 +7,7 @@ class UserModelTest(TestCase):
     Test module for the custom user model
     """
 
+    
     def setUp(self):
         self.__create_dummy_data()
 
