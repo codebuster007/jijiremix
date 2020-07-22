@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c "source ./jijiremix/setup/envvars.sh && source startup.sh"
+    container_name: jijiremix_docker
+    volumes:
+      - .:/jijiremix_docker
+    ports:
+      - "8000:8000"
