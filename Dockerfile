@@ -23,3 +23,5 @@ RUN pip install -r requirements.txt
 # RUN source startup.sh
 
 EXPOSE 8000
+
+ENTRYPOINT [ "/jijiremix_docker/startup.sh" ]
