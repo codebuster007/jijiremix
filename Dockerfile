@@ -18,8 +18,8 @@ ADD . /jijiremix_docker/
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
-RUN source ./jijiremix/setup/envvars.sh
+# RUN source ./jijiremix/setup/envvars.sh
 
-RUN source startup.sh
+# RUN source startup.sh
 
 EXPOSE 8000
