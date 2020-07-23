@@ -2,6 +2,11 @@
 
 This application exposes a jiji like restful api
 
+## Setup
+The application is available on docker.
+run the command: `docker run -dp 8000:8000 jomadi/jijiremix`. It'll download the docker image and startup the container.
+
+
 ## Create a user account
 POST: `/api/v1/accounts/`
 
