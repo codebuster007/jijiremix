@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 
+from .permissions import IsOwner
 from .serializers import ItemSerialiazer, BuyerSerializer
 from .models import ORMItem, ORMBuyer
 # Create your views here.
@@ -13,7 +14,7 @@ class ListCreateItemView(generics.ListCreateAPIView):
 
 
 class RetrieveUpdateDeleteItemView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly, ]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwner, ]
     serializer_class = ItemSerialiazer
     queryset = ORMItem.objects.all()
     http_method_names = ['get', 'patch', 'delete']

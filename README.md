@@ -6,6 +6,9 @@ This application exposes a jiji like restful api
 The application is available on docker.
 run the command: `docker run -dp 8000:8000 jomadi/jijiremix`. It'll download the docker image and startup the container.
 
+### Front end
+The front end of this project can be located at
+[JIJIRemix Frontend](https://github.com/codebuster007/jijiremix_frontend)
 
 ## Create a user account
 POST: `/api/v1/accounts/`

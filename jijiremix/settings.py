@@ -200,7 +200,7 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'user_id',
     'JWT_SECRET_KEY': SECRET_KEY,
     'GET_USER_SECRET_KEY ': 'accounts.models.jwt_get_secret_key',
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
